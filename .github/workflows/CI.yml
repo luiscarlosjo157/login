@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend-usersapp
     
     services:
       mysql:
@@ -40,7 +44,6 @@ jobs:
 
       - name: Dar permisos de ejecución a mvnw
         run: chmod +x mvnw
-        working-directory: ./backen-usersapp
         
       # El paso "Esperar a que MySQL esté listo" se ELIMINÓ
       # porque el bloque 'services' con 'options' lo maneja
