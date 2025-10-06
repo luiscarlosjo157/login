@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  check_backend_ci:
     runs-on: ubuntu-latest
 
     defaults:

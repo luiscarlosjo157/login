@@ -1,0 +1,62 @@
+name: CI/CD Frontend (React)
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+    paths:
+      - 'frontend/**' # Solo se activa con cambios en el frontend
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  # 1. Dependencia: Ejecutar CI del Backend primero
+  check_backend_ci:
+    # 💡 La clave para la dependencia: Requiere que el job 'build' del backend sea exitoso
+    # Asegúrate de que el 'job_id' sea el nombre de tu job de backend (ej. 'build')
+    name: Verificar CI del Backend
+    uses: ./.github/workflows/CI.yml # Ruta a tu archivo de CI del Backend
+    with:
+      # Puedes pasar parámetros si es necesario, pero para la dependencia no es estrictamente obligatorio
+      # Solo con el 'uses' y 'needs' ya se crea la dependencia
+      
+  # 2. Job principal: Integración Continua (CI) del Frontend
+  ci_frontend:
+    runs-on: ubuntu-latest
+    needs: check_backend_ci # 👈 SOLO se ejecuta si el job del Backend fue exitoso
+    
+    defaults:
+      run:
+        working-directory: ./users-app # Asumiendo que esta es la carpeta de tu React
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Usa la versión de Node.js que necesites
+          cache: 'npm' # Habilitar caché de dependencias para acelerar
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar Linting
+        run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
+
+      - name: Ejecutar pruebas unitarias
+        run: npm run test:unit -- --watchAll=false # Ejecutar tests (ej: Jest, Vitest) sin modo watch
+      
+      - name: Compilar y verificar (Build Check)
+        run: npm run build
+      
+      # Opcional: Guardar los archivos de build para el despliegue
+      - name: Subir Artifacto de Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-react-app
+          path: frontend/dist # Reemplaza 'dist' con la carpeta de salida de tu build (ej: build, dist, out)
+          retention-days: 1 # Opcional: Cuántos días guardar el artifact
+
+  # 3. Job de Despliegue (CD)
