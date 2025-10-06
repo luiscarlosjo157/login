@@ -17,7 +17,6 @@ jobs:
     # Asegúrate de que el 'job_id' sea el nombre de tu job de backend (ej. 'build')
     name: Verificar CI del Backend
     uses: ./.github/workflows/CI.yml # Ruta a tu archivo de CI del Backend
-    with:
       # Puedes pasar parámetros si es necesario, pero para la dependencia no es estrictamente obligatorio
       # Solo con el 'uses' y 'needs' ya se crea la dependencia
       
