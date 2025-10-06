@@ -3,8 +3,6 @@ name: CI/CD Frontend (React)
 on:
   push:
     branches: [ "main", "develop" ]
-    paths:
-      - 'frontend/**' # Solo se activa con cambios en el frontend
   pull_request:
     branches: [ "main" ]
     paths:
