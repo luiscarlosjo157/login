@@ -1,0 +1,53 @@
+name: CI de Spring Boot
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: luis1234
+          MYSQL_DATABASE: db_user_springboot
+          MYSQL_USER: testuser
+          MYSQL_PASSWORD: luis1234
+        ports:
+          - 3306:3306
+        
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v4 # Usar la última versión (v4)
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4 # Usar la última versión (v4)
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: Dar permisos de ejecución a mvnw
+        run: chmod +x mvnw
+        
+      # El paso "Esperar a que MySQL esté listo" se ELIMINÓ
+      # porque el bloque 'services' con 'options' lo maneja
+
+      - name: Compilar y ejecutar pruebas con Maven
+        # 2. Inyectar variables de entorno para la conexión a la base de datos
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_user_springboot # 'mysql' es el nombre del servicio
+          SPRING_DATASOURCE_USERNAME: testuser
+          SPRING_DATASOURCE_PASSWORD: luis1234
+        run: ./mvnw clean verify

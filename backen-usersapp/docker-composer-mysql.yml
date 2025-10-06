@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0 # Versión recomendada
+    container_name: mysql_db
+    environment:
+      # **IMPORTANTE**: Usa los mismos valores que en tu archivo application.properties
+      MYSQL_ROOT_PASSWORD: luis1234 # Contraseña para el usuario root
+      MYSQL_DATABASE: db_user_springboot
+      MYSQL_USER: testuser # Usuario que usará Spring Boot
+      MYSQL_PASSWORD: luis1234 # Contraseña para el usuario de Spring Boot
+    ports:
+      - "3306:3306" # Mapea el puerto del contenedor al puerto local
+    # Esto es útil si quieres que los datos persistan localmente (opcional para CI)
+    # volumes:
+    #   - ./data/mysql:/var/lib/mysql
