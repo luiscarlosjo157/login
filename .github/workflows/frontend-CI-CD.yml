@@ -30,12 +30,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22' # Usa la versión de Node.js que necesites
-          cache: 'npm' # Habilitar caché de dependencias para acelerar
 
       - name: Instalar dependencias
         run: npm install
         working-directory: ./users-app # Asegúrate de estar en el directorio correcto
-        
+
       - name: Ejecutar Linting
         run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
 
