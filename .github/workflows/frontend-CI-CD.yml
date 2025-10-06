@@ -34,7 +34,8 @@ jobs:
 
       - name: Instalar dependencias
         run: npm install
-
+        working-directory: ./users-app # Asegúrate de estar en el directorio correcto
+        
       - name: Ejecutar Linting
         run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
 
