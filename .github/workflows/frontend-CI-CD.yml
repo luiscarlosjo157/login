@@ -13,13 +13,9 @@ on:
 jobs:
   # 1. Dependencia: Ejecutar CI del Backend primero
   check_backend_ci:
-    # 💡 La clave para la dependencia: Requiere que el job 'build' del backend sea exitoso
-    # Asegúrate de que el 'job_id' sea el nombre de tu job de backend (ej. 'build')
     name: Verificar CI del Backend
-    uses: ./.github/workflows/CI.yml # Ruta a tu archivo de CI del Backend
-      # Puedes pasar parámetros si es necesario, pero para la dependencia no es estrictamente obligatorio
-      # Solo con el 'uses' y 'needs' ya se crea la dependencia
-      
+    uses: ./.github/workflows/CI.yml
+  
   # 2. Job principal: Integración Continua (CI) del Frontend
   ci_frontend:
     runs-on: ubuntu-latest
