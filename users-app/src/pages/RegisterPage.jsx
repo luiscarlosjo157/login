@@ -16,7 +16,7 @@ export const RegisterPage = () => {
             const user = users.find(u => u.id == id) || initialUserForm;
             setUserSelected(user)
         }
-    }, [id])
+    }, [id, users, initialUserForm])
     
     
     return (

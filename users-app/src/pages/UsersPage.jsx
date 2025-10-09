@@ -20,7 +20,7 @@ export const UsersPage = () => {
   
     useEffect(() => {
         getUsers();
-    }, []) ;
+    }, [getUsers]) ;
 
     if(isLoading){
         return (
