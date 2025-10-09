@@ -30,14 +30,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22' # Usa la versión de Node.js que necesites
-
+      - 
       - name: Instalar dependencias
         run: npm install
         working-directory: ./users-app # Asegúrate de estar en el directorio correcto
 
       - name: Ejecutar Linting
         run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
-
+      
+      - name: Ejecutar Linting
+        run: npm run lint -- --max-warnings 10
+        continue-on-error: true # No fallar el job si hay warnings
+        
       - name: Ejecutar pruebas unitarias
         run: npm run test:unit -- --watchAll=false # Ejecutar tests (ej: Jest, Vitest) sin modo watch
       
