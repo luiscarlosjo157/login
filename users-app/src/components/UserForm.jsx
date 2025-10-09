@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from "react"
 import { useUsers } from "../hooks/useUsers";
 
@@ -111,4 +112,17 @@ export const UserForm = ({ userSelected, handlerCloseForm}) => {
            
         </form>
     )
+
+    
+}
+UserForm.propTypes = {
+    // 1. userSelected debe ser un objeto (el usuario que se está editando).
+    // Su estructura interna (id, username, etc.) se verifica en su uso, 
+    // pero aquí se valida como objeto.
+    userSelected: PropTypes.object.isRequired, 
+    
+    // 2. handlerCloseForm es una función que se usa para cerrar el formulario
+    handlerCloseForm: PropTypes.func, 
+    // Lo hice opcional (sin .isRequired) porque usas: !handlerCloseForm || <button...
+    // Pero si siempre se espera, usa PropTypes.func.isRequired
 }
