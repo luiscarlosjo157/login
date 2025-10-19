@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'users-app/**'
-
+# COMENTARIO DE PRUEBA
 jobs:
   # 1. Dependencia: Ejecutar CI del Backend primero
   check_backend_ci:
@@ -37,10 +37,10 @@ jobs:
       - name: Ejecutar Linting
         run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
       
-      - name: Ejecutar Linting
-        run: npm run lint -- --max-warnings 10
-        continue-on-error: true # No fallar el job si hay warnings
-
+      - name: Ejecutar pruebas unitarias
+        run: npm run test:unit 
+        working-directory: ./users-app 
+        
       - name: Ejecutar pruebas unitarias
         run: npm run test:unit -- --watchAll=false # Ejecutar tests (ej: Jest, Vitest) sin modo watch
       
