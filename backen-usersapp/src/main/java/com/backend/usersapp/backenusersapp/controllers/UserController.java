@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/users")
 @CrossOrigin(originPatterns = "*")
 public class UserController {
-
+    //Inyectar el servicio
     @Autowired
     private IUserService service;
 
