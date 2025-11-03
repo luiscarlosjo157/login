@@ -1,8 +1,11 @@
 name: CI de Spring Boot
 
 on:
-  workflow_call:
-
+  push:
+    branches:
+      - main
+    paths:
+      - 'backen-usersapp/**'
 jobs:
   check_backend_ci:
     runs-on: ubuntu-latest

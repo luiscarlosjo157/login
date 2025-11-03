@@ -2,26 +2,22 @@ name: CI/CD Frontend (React)
 
 on:
   push:
-    branches: [ "main", "develop" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
     paths:
       - 'users-app/**'
-# COMENTARIO DE PRUEBA
 jobs:
-  # 1. Dependencia: Ejecutar CI del Backend primero
   check_backend_ci:
     name: Verificar CI del Backend
     uses: ./.github/workflows/CI.yml
   
-  # 2. Job principal: Integración Continua (CI) del Frontend
   ci_frontend:
     runs-on: ubuntu-latest
-    needs: check_backend_ci # 👈 SOLO se ejecuta si el job del Backend fue exitoso
+    needs: check_backend_ci 
     
     defaults:
       run:
-        working-directory: ./users-app # Asumiendo que esta es la carpeta de tu React
+        working-directory: ./users-app 
 
     steps:
       - uses: actions/checkout@v4
@@ -29,23 +25,22 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # Usa la versión de Node.js que necesites
+          node-version: '22' 
       - name: Instalar dependencias
         run: npm install
-        working-directory: ./users-app # Asegúrate de estar en el directorio correcto
+        working-directory: ./users-app 
 
       - name: Ejecutar Linting
-        run: npm run lint # Asumiendo que tienes un script 'lint' en package.json
+        run: npm run lint
       
       - name: Compilar y verificar (Build Check)
         run: npm run build
       
-      # Opcional: Guardar los archivos de build para el despliegue
       - name: Subir Artifacto de Build
         uses: actions/upload-artifact@v4
         with:
           name: build-react-app
-          path: frontend/dist # Reemplaza 'dist' con la carpeta de salida de tu build (ej: build, dist, out)
-          retention-days: 1 # Opcional: Cuántos días guardar el artifact
+          path: frontend/dist 
+          retention-days: 1 
 
-  # 3. Job de Despliegue (CD)
+  
