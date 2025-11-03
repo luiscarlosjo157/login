@@ -7,13 +7,8 @@ on:
     paths:
       - 'users-app/**'
 jobs:
-  check_backend_ci:
-    name: Verificar CI del Backend
-    uses: ./.github/workflows/CI.yml
-  
   ci_frontend:
     runs-on: ubuntu-latest
-    needs: check_backend_ci 
     
     defaults:
       run:
