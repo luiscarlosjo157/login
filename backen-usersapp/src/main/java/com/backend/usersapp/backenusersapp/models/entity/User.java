@@ -13,7 +13,7 @@ public class User implements IUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    //comentario de prueba
     @NotBlank
     @Column(unique = true)
     private String username;
