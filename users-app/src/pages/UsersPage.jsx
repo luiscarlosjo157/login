@@ -52,7 +52,7 @@ export const UsersPage = () => {
               
                 {
                 users.length === 0
-                ?<div className="alert alert-warning"> No hay usuarios en el sistema!</div>
+                ?<div className="alert alert-warning "> No se encontro usuarios en el sistema!</div>
                 : <UsersList></UsersList>
                 }  
             </div>
